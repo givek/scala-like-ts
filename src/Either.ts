@@ -1,4 +1,6 @@
-abstract class Either<TL, TR> {
+import { Maybe, Some, None } from "./Maybe";
+
+export abstract class Either<TL, TR> {
   abstract get isLeft(): boolean;
 
   abstract get isRight(): boolean;
@@ -13,6 +15,8 @@ abstract class Either<TL, TR> {
 
   abstract filterOrElse(p: (value: TR) => boolean, zero: TL): Either<TL, TR>;
 
+  abstract get toMaybe(): Maybe<TR>;
+
   abstract match<X, Y>({
     caseLeft,
     caseRight,
@@ -22,7 +26,7 @@ abstract class Either<TL, TR> {
   }): X | Y;
 }
 
-class Left<TL, TR> extends Either<TL, TR> {
+export class Left<TL, TR> extends Either<TL, TR> {
   private value: TL;
 
   constructor(value: TL) {
@@ -58,6 +62,10 @@ class Left<TL, TR> extends Either<TL, TR> {
     return this;
   }
 
+  get toMaybe(): Maybe<TR> {
+    return new None();
+  }
+
   match<X, Y>({
     caseLeft,
   }: {
@@ -68,7 +76,7 @@ class Left<TL, TR> extends Either<TL, TR> {
   }
 }
 
-class Right<TL, TR> extends Either<TL, TR> {
+export class Right<TL, TR> extends Either<TL, TR> {
   private value: TR;
 
   constructor(value: TR) {
@@ -102,6 +110,10 @@ class Right<TL, TR> extends Either<TL, TR> {
 
   filterOrElse(p: (value: TR) => boolean, zero: TL): Either<TL, TR> {
     return p(this.value) ? this : new Left(zero);
+  }
+
+  get toMaybe(): Maybe<TR> {
+    return new Some(this.value);
   }
 
   match<X, Y>({
