@@ -1,3 +1,4 @@
+import { Either, Left, Right } from "./Either";
 import { Maybe, None, Some } from "./Maybe";
 
 export abstract class Try<T> {
@@ -20,6 +21,8 @@ export abstract class Try<T> {
   abstract get failed(): Try<Error>;
 
   abstract get toMaybe(): Maybe<T>;
+
+  abstract get toEither(): Either<Error, T>;
 
   match<X, Y>({
     successCase,
@@ -78,12 +81,16 @@ export class Failure<T> extends Try<T> {
     return this;
   }
 
+  get failed(): Try<Error> {
+    return new Success(this.exception);
+  }
+
   get toMaybe(): Maybe<T> {
     return new None();
   }
 
-  get failed(): Try<Error> {
-    return new Success(this.exception);
+  get toEither(): Either<Error, T> {
+    return new Left(this.exception);
   }
 }
 
@@ -121,11 +128,15 @@ export class Success<T> extends Try<T> {
       : new Failure(new Error(`Predicate does not hold for ${this.getVal}`));
   }
 
+  get failed(): Try<Error> {
+    return new Failure(new Error("Success.failed"));
+  }
+
   get toMaybe(): Maybe<T> {
     return new Some(this.getVal);
   }
 
-  get failed(): Try<Error> {
-    return new Failure(new Error("Success.failed"));
+  get toEither(): Either<Error, T> {
+    return new Right(this.getVal);
   }
 }
