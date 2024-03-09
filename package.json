@@ -1,0 +1,14 @@
+{
+  "name": "scala-like-ts",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "fmt": "bunx prettier . --write"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
