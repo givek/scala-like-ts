@@ -2,7 +2,7 @@ type RecordKey = string | number | symbol;
 
 function groupBy<T extends Record<RecordKey, unknown>, R extends RecordKey>(
   l: T[],
-  f: (i: T) => R
+  f: (i: T) => R,
 ): Record<R, T[]> {
   let result: Record<R, T[]> = {} as Record<R, T[]>;
 

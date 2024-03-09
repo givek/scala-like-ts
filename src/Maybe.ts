@@ -25,8 +25,8 @@ export abstract class Maybe<T> {
     return this.isEmpty
       ? new None()
       : p(this.getVal)
-      ? new Some(this.getVal)
-      : new None();
+        ? new Some(this.getVal)
+        : new None();
   }
 
   match<X, Y>({

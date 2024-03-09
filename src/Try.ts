@@ -43,8 +43,8 @@ export abstract class Try<T> {
       return typeof e === "string"
         ? new Failure(new Error(e))
         : e instanceof Error
-        ? new Failure(e)
-        : new Failure(new Error("Unknown!"));
+          ? new Failure(e)
+          : new Failure(new Error("Unknown!"));
     }
   }
 }
