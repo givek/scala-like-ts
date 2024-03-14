@@ -86,7 +86,7 @@ export class Failure<T> extends Try<T> {
   }
 
   get toMaybe(): Maybe<T> {
-    return new None();
+    return None.apply();
   }
 
   get toEither(): Either<Error, T> {
@@ -133,7 +133,7 @@ export class Success<T> extends Try<T> {
   }
 
   get toMaybe(): Maybe<T> {
-    return new Some(this.getVal);
+    return Some.apply(() => this.getVal);
   }
 
   get toEither(): Either<Error, T> {
