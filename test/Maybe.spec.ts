@@ -163,4 +163,66 @@ describe("flatMap", () => {
   test("None.map should return None", () => {
     expect(none.map((a) => a * 3)).toEqual(none);
   });
+
+  const err = new Error("Some Error.");
+
+  test("Some.flatMap should throw Error if error is thrown inside the flatMap", () => {
+    const num = 2;
+
+    const someNum = Some.apply(() => num);
+
+    expect(() => {
+      someNum.flatMap((_) => {
+        throw err;
+      });
+    }).toThrow(err);
+  });
+
+  test("None.flatMap should return None, even if error is thrown inside the flatMap", () => {
+    expect(
+      none.flatMap((_) => {
+        throw err;
+      }),
+    ).toEqual(none);
+  });
+});
+
+describe("filter", () => {
+  test("Some.filter should return Some with same value if predicate holds for the value", () => {
+    const someNum = Some.apply(() => 2);
+
+    expect(someNum.filter((n) => n != 4)).toEqual(someNum);
+  });
+
+  test("Some.filter should return None if predicate does holds for the value", () => {
+    const someNum = Some.apply(() => 2);
+
+    expect(someNum.filter((n) => n != 2)).toEqual(none);
+  });
+
+  test("None.filter should return None", () => {
+    expect(none.filter((a) => a === 3)).toEqual(none);
+  });
+
+  const err = new Error("Some Error.");
+
+  test("Some.filter should throw Error if error is thrown inside the filter", () => {
+    const num = 2;
+
+    const someNum = Some.apply(() => num);
+
+    expect(() => {
+      someNum.filter((_) => {
+        throw err;
+      });
+    }).toThrow(err);
+  });
+
+  test("None.filter should return None, even if error is thrown inside the filter", () => {
+    expect(
+      none.filter((_) => {
+        throw err;
+      }),
+    ).toEqual(none);
+  });
 });
