@@ -42,7 +42,7 @@ export abstract class Maybe<T> {
   static apply<S>(lazyV: () => S): Maybe<S> {
     const v = lazyV();
 
-    if (v === undefined || v === null) {
+    if (v === undefined || v === null || Number.isNaN(v)) {
       return None.apply();
     } else {
       return Some.apply(() => v);

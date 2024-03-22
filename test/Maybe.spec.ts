@@ -226,3 +226,67 @@ describe("filter", () => {
     ).toEqual(none);
   });
 });
+
+describe("match", () => {
+  const val = { foo: "bar" };
+
+  const defaultVal = "default";
+
+  test("None.match should execute the caseNone", () => {
+    const noneObj: Maybe<{ foo: string }> = none;
+
+    const res = noneObj.match({
+      caseNone: () => defaultVal,
+      caseSome: (obj) => obj.foo,
+    });
+
+    expect(res).toEqual(defaultVal);
+  });
+
+  test("Some.match should execute the caseSome", () => {
+    const someObj = Some.apply(() => val);
+
+    const res = someObj.match({
+      caseNone: () => "default",
+      caseSome: (obj) => obj.foo,
+    });
+
+    expect(res).toEqual(val.foo);
+  });
+});
+
+describe("apply", () => {
+  test("Maybe.apply should return an instance of Some for defined and non null values", () => {
+    const value = "hello";
+
+    const maybeStr = Maybe.apply(() => value);
+
+    const someStr = Some.apply(() => value);
+
+    expect(maybeStr).toEqual(someStr);
+  });
+
+  test("Maybe.apply should return an instance of None for NaN", () => {
+    const value = NaN;
+
+    const maybeStr = Maybe.apply(() => value);
+
+    expect(maybeStr).toEqual(none);
+  });
+
+  test("Maybe.apply should return an instance of None for undefined", () => {
+    const value = undefined;
+
+    const maybeStr = Maybe.apply(() => value);
+
+    expect(maybeStr).toEqual(none);
+  });
+
+  test("Maybe.apply should return an instance of None for null", () => {
+    const value = null;
+
+    const maybeStr = Maybe.apply(() => value);
+
+    expect(maybeStr).toEqual(none);
+  });
+});
