@@ -50,7 +50,7 @@ describe("getOrElse", () => {
     expect(someNums.getOrElse([])).toEqual(nums);
   });
 
-  test("Some.getOrElse should return the value inside Some", () => {
+  test("None.getOrElse should return the value provided to getOrElse", () => {
     expect(none.getOrElse([])).toEqual([]);
   });
 });
@@ -100,7 +100,7 @@ describe("flatMap", () => {
     expect(someSomeNum.flatMap((n) => n)).toEqual(someNum);
   });
 
-  test("None.map should return None", () => {
+  test("None.flatMap should return None", () => {
     expect(none.map((a) => a * 3)).toEqual(none);
   });
 
@@ -195,33 +195,6 @@ describe("match", () => {
   });
 });
 
-describe("Maybe.apply", () => {
-  test("Maybe.apply for undefined should return None", () => {
-    expect(Maybe.apply(() => undefined)).toEqual(None.apply());
-  });
-
-  test("Maybe.apply for null should return None", () => {
-    expect(Maybe.apply(() => null)).toEqual(None.apply());
-  });
-
-  // TODO: more test cases which should return None
-
-  test("Maybe.apply for number should return Some<number>", () => {
-    const num = 4;
-    expect(Maybe.apply(() => num)).toEqual(Some.apply(() => num));
-  });
-
-  test("Maybe.apply for list should return Some<T[]>", () => {
-    const pets: string[] = ["shiba inu", "cat", "red panda"];
-    expect(Maybe.apply(() => pets)).toEqual(Some.apply(() => pets));
-  });
-
-  test("Maybe.apply for list should return Some<T[]>", () => {
-    const person = { name: "John" };
-    expect(Maybe.apply(() => person)).toEqual(Some.apply(() => person));
-  });
-});
-
 describe("Some.apply", () => {
   test("Some.apply for undefined should return Some<undefined>", () => {
     expect(Some.apply(() => undefined)).toEqual(Some.apply(() => undefined));
@@ -262,6 +235,11 @@ describe("Maybe.apply", () => {
     const someStr = Some.apply(() => value);
 
     expect(maybeStr).toEqual(someStr);
+  });
+
+  test("Maybe.apply for list should return Some<T[]>", () => {
+    const pets: string[] = ["shiba inu", "cat", "red panda"];
+    expect(Maybe.apply(() => pets)).toEqual(Some.apply(() => pets));
   });
 
   test("Maybe.apply should return an instance of None for NaN", () => {
