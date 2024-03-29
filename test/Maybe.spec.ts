@@ -10,7 +10,7 @@ describe("isDefined", () => {
     expect(someNumber.isDefined).toBe(true);
   });
 
-  test("isDefined should return true for None", () => {
+  test("isDefined should return false for None", () => {
     expect(none.isDefined).toBe(false);
   });
 });
@@ -20,68 +20,8 @@ describe("isEmpty", () => {
     expect(someNumber.isEmpty).toBe(false);
   });
 
-  test("isEmpty should return false for None", () => {
+  test("isEmpty should return true for None", () => {
     expect(none.isEmpty).toBe(true);
-  });
-});
-
-describe("Maybe.apply", () => {
-  test("Maybe.apply for undefined should return None", () => {
-    expect(Maybe.apply(() => undefined)).toEqual(None.apply());
-  });
-
-  test("Maybe.apply for null should return None", () => {
-    expect(Maybe.apply(() => null)).toEqual(None.apply());
-  });
-
-  // TODO: more test cases which should return None
-
-  test("Maybe.apply for number should return Some<number>", () => {
-    const num = 4;
-    expect(Maybe.apply(() => num)).toEqual(Some.apply(() => num));
-  });
-
-  test("Maybe.apply for list should return Some<T[]>", () => {
-    const pets: string[] = ["shiba inu", "cat", "red panda"];
-    expect(Maybe.apply(() => pets)).toEqual(Some.apply(() => pets));
-  });
-
-  test("Maybe.apply for list should return Some<T[]>", () => {
-    const person = { name: "John" };
-    expect(Maybe.apply(() => person)).toEqual(Some.apply(() => person));
-  });
-});
-
-describe("Some.apply", () => {
-  test("Some.apply for undefined should return Some<undefined>", () => {
-    expect(Some.apply(() => undefined)).toEqual(Some.apply(() => undefined));
-  });
-
-  test("Some.apply for null should return Some<null>", () => {
-    expect(Some.apply(() => null)).toEqual(Some.apply(() => null));
-  });
-
-  // TODO: more test cases which should return None
-
-  test("Some.apply for number should return Some<number>", () => {
-    const num = 4;
-    expect(Some.apply(() => num)).toEqual(Some.apply(() => num));
-  });
-
-  test("Some.apply for list should return Some<T[]>", () => {
-    const pets: string[] = ["shiba inu", "cat", "red panda"];
-    expect(Some.apply(() => pets)).toEqual(Some.apply(() => pets));
-  });
-
-  test("Some.apply for list should return Some<T[]>", () => {
-    const person = { name: "John" };
-    expect(Some.apply(() => person)).toEqual(Some.apply(() => person));
-  });
-});
-
-describe("None.apply", () => {
-  test("None.apply should return None", () => {
-    expect(None.apply()).toEqual(None.apply());
   });
 });
 
@@ -255,7 +195,65 @@ describe("match", () => {
   });
 });
 
-describe("apply", () => {
+describe("Maybe.apply", () => {
+  test("Maybe.apply for undefined should return None", () => {
+    expect(Maybe.apply(() => undefined)).toEqual(None.apply());
+  });
+
+  test("Maybe.apply for null should return None", () => {
+    expect(Maybe.apply(() => null)).toEqual(None.apply());
+  });
+
+  // TODO: more test cases which should return None
+
+  test("Maybe.apply for number should return Some<number>", () => {
+    const num = 4;
+    expect(Maybe.apply(() => num)).toEqual(Some.apply(() => num));
+  });
+
+  test("Maybe.apply for list should return Some<T[]>", () => {
+    const pets: string[] = ["shiba inu", "cat", "red panda"];
+    expect(Maybe.apply(() => pets)).toEqual(Some.apply(() => pets));
+  });
+
+  test("Maybe.apply for list should return Some<T[]>", () => {
+    const person = { name: "John" };
+    expect(Maybe.apply(() => person)).toEqual(Some.apply(() => person));
+  });
+});
+
+describe("Some.apply", () => {
+  test("Some.apply for undefined should return Some<undefined>", () => {
+    expect(Some.apply(() => undefined)).toEqual(Some.apply(() => undefined));
+  });
+
+  test("Some.apply for null should return Some<null>", () => {
+    expect(Some.apply(() => null)).toEqual(Some.apply(() => null));
+  });
+
+  test("Some.apply for number should return Some<number>", () => {
+    const num = 4;
+    expect(Some.apply(() => num)).toEqual(Some.apply(() => num));
+  });
+
+  test("Some.apply for list should return Some<T[]>", () => {
+    const pets: string[] = ["shiba inu", "cat", "red panda"];
+    expect(Some.apply(() => pets)).toEqual(Some.apply(() => pets));
+  });
+
+  test("Some.apply for object should return Some<{}>", () => {
+    const person = { name: "John" };
+    expect(Some.apply(() => person)).toEqual(Some.apply(() => person));
+  });
+});
+
+describe("None.apply", () => {
+  test("None.apply should return None", () => {
+    expect(None.apply()).toEqual(None.apply());
+  });
+});
+
+describe("Maybe.apply", () => {
   test("Maybe.apply should return an instance of Some for defined and non null values", () => {
     const value = "hello";
 
