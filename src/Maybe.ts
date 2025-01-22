@@ -25,8 +25,8 @@ export abstract class Maybe<T> {
     return this.isEmpty
       ? None.apply()
       : p(this.getVal)
-        ? Some.apply(() => this.getVal)
-        : None.apply();
+      ? Some.apply(() => this.getVal)
+      : None.apply();
   }
 
   match<X, Y>({
@@ -39,14 +39,8 @@ export abstract class Maybe<T> {
     return this.isEmpty ? caseNone() : caseSome(this.getVal);
   }
 
-  static apply<S>(lazyV: () => S): Maybe<S> {
-    const v = lazyV();
-
-    if (v === undefined || v === null || Number.isNaN(v)) {
-      return None.apply();
-    } else {
-      return Some.apply(() => v);
-    }
+  toJSON() {
+    return this.isDefined ? this.getVal : undefined;
   }
 }
 
