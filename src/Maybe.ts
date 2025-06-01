@@ -14,19 +14,19 @@ export abstract class Maybe<T> {
   }
 
   map<R>(t: (value: T) => R): Maybe<R> {
-    return this.isEmpty ? None.apply() : Some.apply(() => t(this.getVal));
+    return this.isEmpty ? new None() : new Some(t(this.getVal));
   }
 
   flatMap<R>(t: (value: T) => Maybe<R>): Maybe<R> {
-    return this.isEmpty ? None.apply() : t(this.getVal);
+    return this.isEmpty ? new None() : t(this.getVal);
   }
 
   filter(p: (value: T) => boolean): Maybe<T> {
     return this.isEmpty
-      ? None.apply()
+      ? new None()
       : p(this.getVal)
-      ? Some.apply(() => this.getVal)
-      : None.apply();
+      ? new Some(this.getVal)
+      : new None();
   }
 
   match<X, Y>({
@@ -38,41 +38,27 @@ export abstract class Maybe<T> {
   }): X | Y {
     return this.isEmpty ? caseNone() : caseSome(this.getVal);
   }
-
-  toJSON() {
-    return this.isDefined ? this.getVal : undefined;
-  }
 }
 
 export class None extends Maybe<never> {
-  private constructor() {
+  constructor() {
     super();
   }
 
   get getVal(): never {
     throw new Error("None.getVal");
   }
-
-  static apply(): None {
-    return new None();
-  }
 }
 
 export class Some<T> extends Maybe<T> {
   private value: T;
 
-  private constructor(value: T) {
+  constructor(value: T) {
     super();
     this.value = value;
   }
 
   get getVal(): T {
     return this.value;
-  }
-
-  static apply<S>(lazyV: () => S): Some<S> {
-    const v = lazyV();
-
-    return new Some(v);
   }
 }
