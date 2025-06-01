@@ -38,10 +38,6 @@ export abstract class Maybe<T> {
   }): X | Y {
     return this.isEmpty ? caseNone() : caseSome(this.getVal);
   }
-
-  toJSON() {
-    return this.isDefined ? this.getVal : undefined;
-  }
 }
 
 export class None extends Maybe<never> {

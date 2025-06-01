@@ -6,3 +6,5 @@ Trying to implement Scala like monads in TypeScript.
 
 - Equality check
 - Parse from JSON
+- Helpers for construction
+- Check async compatibility

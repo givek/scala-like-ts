@@ -1,1 +1,1 @@
-export { Maybe, Some, None } from "./src/Maybe.ts";
+export { Maybe, None, Some } from "./src/Maybe.ts";
