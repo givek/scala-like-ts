@@ -1,3 +1,4 @@
+import { Left, Right, type Either } from "./Either";
 import { Maybe, None, Some } from "./Maybe";
 
 export abstract class Try<T> {
@@ -18,6 +19,12 @@ export abstract class Try<T> {
   abstract filter(p: (value: T) => boolean): Try<T>;
 
   abstract get failed(): Try<Error>;
+
+  get toEither(): Either<Error, T> {
+    return this.isSuccess
+      ? new Right(this.getVal)
+      : new Left(this.failed.getVal);
+  }
 
   get toMaybe(): Maybe<T> {
     return this.isSuccess ? new Some(this.getVal) : new None();

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { Maybe, None, Some } from "../index";
+import { None, Some } from "../index";
 
 const someNumber = new Some(5);
 const none = new None();
