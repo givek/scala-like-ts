@@ -107,8 +107,8 @@ export class Success<T> extends Try<T> {
       return error instanceof Error
         ? new Failure(error)
         : typeof error === "string"
-        ? new Failure(new Error(error))
-        : new Failure(new Error("Unknown error!"));
+          ? new Failure(new Error(error))
+          : new Failure(new Error("Unknown error!"));
     }
   }
 
@@ -119,8 +119,8 @@ export class Success<T> extends Try<T> {
       return error instanceof Error
         ? new Failure(error)
         : typeof error === "string"
-        ? new Failure(new Error(error))
-        : new Failure(new Error("Unknown error!"));
+          ? new Failure(new Error(error))
+          : new Failure(new Error("Unknown error!"));
     }
   }
 
@@ -132,5 +132,17 @@ export class Success<T> extends Try<T> {
 
   get failed(): Try<Error> {
     return new Failure(new Error("Success.failed"));
+  }
+}
+
+export function withTry<T>(ex: () => T): Try<T> {
+  try {
+    return new Success(ex());
+  } catch (error) {
+    return error instanceof Error
+      ? new Failure(error)
+      : typeof error === "string"
+        ? new Failure(new Error(error))
+        : new Failure(new Error("Unknown error!"));
   }
 }

@@ -34,7 +34,7 @@ describe("Try class", () => {
 
     test("should apply a function with flatMap", () => {
       const flatMappedInstance = successInstance.flatMap(
-        (x) => new Success(x * 2)
+        (x) => new Success(x * 2),
       );
       expect(flatMappedInstance.getVal).toBe(84);
     });
@@ -81,7 +81,7 @@ describe("Try class", () => {
 
     test("should throw an error for getVal", () => {
       expect(() => failureInstance.getVal).toThrow(
-        new Error("Something went wrong")
+        new Error("Something went wrong"),
       );
     });
 
@@ -96,7 +96,7 @@ describe("Try class", () => {
 
     test("should flatMap to another failure", () => {
       const flatMappedInstance = failureInstance.flatMap(
-        (x) => new Failure(new Error("New error"))
+        (x) => new Failure(new Error("New error")),
       );
       expect(flatMappedInstance).toBeInstanceOf(Failure);
     });

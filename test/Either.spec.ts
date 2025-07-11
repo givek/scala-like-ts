@@ -57,7 +57,7 @@ describe("Either", () => {
     it("filterOrElse should return the original Left instance", () => {
       const filtered = leftInstance.filterOrElse(
         (val) => val > 10,
-        "Filter Error"
+        "Filter Error",
       );
 
       expect(filtered).toBeInstanceOf(Left);
@@ -132,7 +132,7 @@ describe("Either", () => {
 
     it("flatMap should apply the function and return the result of the function", () => {
       const flatMappedSuccess = rightInstance.flatMap(
-        (val) => new Right(val + 10)
+        (val) => new Right(val + 10),
       );
 
       expect(flatMappedSuccess).toBeInstanceOf(Right);
@@ -140,7 +140,7 @@ describe("Either", () => {
       expect(flatMappedSuccess.getOrElse(0)).toBe(rightValue + 10);
 
       const flatMappedFailure = rightInstance.flatMap(
-        (val) => new Left(`Failed for ${val}`)
+        (val) => new Left(`Failed for ${val}`),
       );
 
       expect(flatMappedFailure).toBeInstanceOf(Left);
@@ -156,7 +156,7 @@ describe("Either", () => {
     it("filterOrElse should return Right if predicate is true", () => {
       const filtered = rightInstance.filterOrElse(
         (val) => val > 10,
-        "Filter Error"
+        "Filter Error",
       );
 
       expect(filtered).toBeInstanceOf(Right);
@@ -167,7 +167,7 @@ describe("Either", () => {
     it("filterOrElse should return Left if predicate is false", () => {
       const filtered = rightInstance.filterOrElse(
         (val) => val < 10,
-        "Filter Error"
+        "Filter Error",
       );
 
       expect(filtered).toBeInstanceOf(Left);
